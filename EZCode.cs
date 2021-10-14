@@ -2,6 +2,8 @@ using System;
 using System.IO;
 using System.Reflection
 using EZCode;
+using System.Net;
+using System.Net.Sockets;
 
 //the namespace is called EZCode.
 //created by ImTrxsh.
@@ -34,6 +36,51 @@ namespace EZCode {
 				System.Console.Clear();
 			}catch(Exception e) {
 				Console.WriteLine("Error Occured! Printing Stack Trace:" + e.StackTrace);
+			}
+		}
+	}
+	public class Net {
+		public static WebClient InitalizeClient() {
+			WebClient client = new WebClient();
+			
+			//this initalizes the client and returns it as a value
+			EZCode.Console.WriteLine("WebClient initilized.");
+			return client;
+		}
+		public static void DownloadFile(WebClient webclient, string address, string fileName) {
+			try {
+				webclient.DownloadFile(address, fileName);
+			}catch(Exception e) {
+				Console.WriteLine("Error Occured! Printing Stack Trace:" + e.StackTrace);
+			}
+		} 
+		public static void SendSocket(string ip, string sentString) {
+			Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+			System.Net.IPAddress ipAddr = System.Net.IPAddress.Parse(ip);
+            System.Net.IPEndPoint remoteEP = new IPEndPoint(ipAddr, 3456);
+            socket.Connect(remoteEP);
+			
+			byte[] byData = System.Text.Encoding.ASCII.GetBytes(sentString);
+            socket.Send(byData);
+		}
+		public static void ListenForPackets() {
+			Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+			
+			byte[] buffer = new byte[1024];
+            int iRx = socket.Receive(buffer);
+            char[] chars = new char[iRx];
+
+            System.Text.Decoder d = System.Text.Encoding.UTF8.GetDecoder();
+            int charLen = d.GetChars(buffer, 0, iRx, chars, 0);
+            System.String recv = new System.String(chars);;
+			
+			bool recievedPacket = false;
+			
+			while(true) {
+				if(recv.Length != 0 && recievedPacket == false) {
+					EZCode.Console.WriteLine(recv);
+					recievedPacket = true;
+				}
 			}
 		}
 	}
