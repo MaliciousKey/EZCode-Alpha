@@ -1,5 +1,7 @@
 using System;
 using System.IO;
+using System.Reflection
+using EZCode;
 
 //the namespace is called EZCode.
 //created by ImTrxsh.
@@ -36,6 +38,18 @@ namespace EZCode {
 		}
 	}
 	public class Math {
+		public static int Add(int input, int input2) {
+			return input + input2;
+		}
+		public static int Subtract(int input, int input2) {
+			return input - input2;
+		}
+		public static int Multiply(int input, int input2) {
+			return input * input2;
+		}
+		public static int Divide(int input, int input2) {
+			return input / input2;
+		}
 		public static int Abs(int input) {
 			try {
 				Math.Abs(input);
@@ -121,5 +135,38 @@ namespace EZCode {
 				Console.WriteLine("Error Occured! Printing Stack Trace:" + e.StackTrace);
 			}
 		}
+	  public class Loops {
+		public static void FLoopDoFunc(int length, string function) {
+			try {
+				for(int i = 0; i < length; i++) {
+                    MethodInfo method = function.GetType().GetMethod(function);
+                    method.Invoke(function, null);
+				}
+			}catch(Exception e) {
+				Console.WriteLine("Error Occured! Printing Stack Trace:" + e.StackTrace);
+			}
+		}
+		public static void FLoopConsoleWriteLine(int length, string line) {
+			try {
+				for(int i = 0; i < length; i++) {
+					EZCode.Console.WriteLine(line);
+				}
+			}catch(Exception e) {
+				Console.WriteLine("Error Occured! Printing Stack Trace:" + e.StackTrace);
+			}
+		}
+		public static void FLoopDoWriteInt(int length, int interger) {
+			try {
+				for(int i = 0; i< length; i++) {
+					EZCode.Console.WriteInt(interger);
+				}
+			}catch(Exception e) {
+				Console.WriteLine("Error Occured! Printing Stack Trace:" + e.StackTrace);
+			}
+		}
+	}
+	public class Special {
+		//coming soon !
+	}
     }
 }
