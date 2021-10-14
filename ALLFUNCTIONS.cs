@@ -3,6 +3,7 @@
 using System;
 using EZCode;
 using System.IO;
+using System.Reflection;
 					
 public class Program {
 	public static void Main() {
