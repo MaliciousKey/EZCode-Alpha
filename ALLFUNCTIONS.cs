@@ -6,6 +6,7 @@ using System.IO;
 using System.Reflection;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 					
 public class Program {
 	public static void Main() {
@@ -44,6 +45,10 @@ public class Program {
 		EZCode.Net.DownloadFile(webClient,link,fileName);
 		EZCode.Net.SendSocket(ip,sentString);
 		EZCode.Net.ListenForPackets();
+		
+		//Threading Methods
+		EZCode.Thread.InitThread(string function);
+		EZCode.Thread.CloseThread(Thread);
 		
 		//EZCode Specials Coming Soon!
 	}
