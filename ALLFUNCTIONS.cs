@@ -4,6 +4,8 @@ using System;
 using EZCode;
 using System.IO;
 using System.Reflection;
+using System.Net;
+using System.Net.Sockets;
 					
 public class Program {
 	public static void Main() {
@@ -36,6 +38,12 @@ public class Program {
 		EZCode.Loops.FLoopDoFunc(length,functionName);
 		EZCode.Loops.FLoopConsoleWriteLine(length,line);
 		EZCode.Loops.FLoopWriteInt(length,int1);
+		
+		//Net Methods
+		EZCode.Net.InitalizeClient();
+		EZCode.Net.DownloadFile(webClient,link,fileName);
+		EZCode.Net.SendSocket(ip,sentString);
+		EZCode.Net.ListenForPackets();
 		
 		//EZCode Specials Coming Soon!
 	}
