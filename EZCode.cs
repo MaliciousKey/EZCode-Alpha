@@ -225,6 +225,9 @@ namespace EZCode {
 				Console.WriteLine("Error Occured! Printing Stack Trace:" + e.StackTrace);
 			}
 		}
+		public static void CloseThread(System.Threading.Thread t) {
+		    t.Abort();
+		}
 	}
 	public class Special {
 		//coming soon !
