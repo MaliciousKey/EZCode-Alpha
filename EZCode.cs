@@ -40,16 +40,10 @@ namespace EZCode {
 		}
 	}
 	public class Net {
-		public static WebClient InitalizeClient() {
-			WebClient client = new WebClient();
-			
-			//this initalizes the client and returns it as a value
-			EZCode.Console.WriteLine("WebClient initilized.");
-			return client;
-		}
 		public static void DownloadFile(WebClient webclient, string address, string fileName) {
 			try {
 				webclient.DownloadFile(address, fileName);
+				EZCode.Console.WriteLine("EZCode: File Dowloading..");
 			}catch(Exception e) {
 				Console.WriteLine("Error Occured! Printing Stack Trace:" + e.StackTrace);
 			}
@@ -73,11 +67,12 @@ namespace EZCode {
             System.Text.Decoder d = System.Text.Encoding.UTF8.GetDecoder();
             int charLen = d.GetChars(buffer, 0, iRx, chars, 0);
             System.String recv = new System.String(chars);;
+			EZCode.Console.WriteLine("EZCode: Packet Sent.");
 			
 			bool recievedPacket = false;
 			
 			while(true) {
-				if(recv.Length != 0 && recievedPacket == false) {
+				if(recv.Length != 0 && recievedPacket == false || recv != null && recievedPacket == false) {
 					EZCode.Console.WriteLine(recv);
 					recievedPacket = true;
 				}
@@ -145,10 +140,10 @@ namespace EZCode {
 			}
 		} 
 	}
-    public class Files {
+	public class Files {
     	public static void Create(string file) {
 			try {
-				if(File.Exists(file))
+				if(System.IO.File.Exists(file))
 					Console.WriteLine("File Already Exists!");
 			}catch(Exception e) {
 				Console.WriteLine("Error Occured! Printing Stack Trace:" + e.StackTrace);
@@ -156,33 +151,34 @@ namespace EZCode {
 		}
 		public static void Delete(string file) {
 			try {
-				File.Delete(file);
+				System.IO.File.Delete(file);
 			}catch(Exception e) {
 				Console.WriteLine("Error Occured! Printing Stack Trace:" + e.StackTrace);
 			}
 		}
 		public static void Copy(string file, string destination) {
 			try {
-				File.Copy(file,destination);
+				System.IO.File.Copy(file,destination);
 			}catch(Exception e) {
 				Console.WriteLine("Error Occured! Printing Stack Trace:" + e.StackTrace);
 			}
 		}
 		public static void Move(string originalPath, string destination) {
 			try {
-				File.Move(originalPath, destination);
+				System.IO.File.Move(originalPath, destination);
 			}catch(Exception e) {
 				Console.WriteLine("Error Occured! Printing Stack Trace:" + e.StackTrace);
 			}
 		}
 		public static void Open(string file) {
 			try {
-				File.Open(file, FileMode.Open);
+				System.IO.File.Open(file, FileMode.Open);
 			}catch(Exception e) {
 				Console.WriteLine("Error Occured! Printing Stack Trace:" + e.StackTrace);
 			}
 		}
-	  public class Loops {
+    }
+	public class Loops {
 		public static void FLoopDoFunc(int length, string function) {
 			try {
 				for(int i = 0; i < length; i++) {
@@ -212,8 +208,24 @@ namespace EZCode {
 			}
 		}
 	}
+	public class Thread {
+		public static void InitThread(string function) {
+			try {
+				EZCode.Console.WriteLine("Init Function.");
+				Type type = typeof(Program);
+            MethodInfo method = type.GetMethod(function);
+				
+			    //wont work cause it casts as a object so we cast it as a threadstart and invoke the method
+			   EZCode.Console.WriteLine("Init Thread");
+			   System.Threading.Thread t = new System.Threading.Thread((System.Threading.ThreadStart)method.Invoke(function, null));
+			   t.Start(0);
+			   EZCode.Console.WriteLine("Started Thread!");
+			}catch(Exception e) {
+				Console.WriteLine("Error Occured! Printing Stack Trace:" + e.StackTrace);
+			}
+		}
+	}
 	public class Special {
 		//coming soon !
 	}
-    }
 }
